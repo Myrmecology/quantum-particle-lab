@@ -90,9 +90,15 @@ class QuantumUI {
         // Add visual feedback
         this.addSliderGlow(event.target);
         
+        // Fix parameter name mapping
+        let paramName = event.target.id.replace('-slider', '').replace('-', '_');
+        if (paramName === 'particles') {
+            paramName = 'particle_count'; // Fix the naming mismatch
+        }
+        
         // Emit change event for physics engine
         this.emitControlChange({
-            [event.target.id.replace('-slider', '').replace('-', '_')]: value
+            [paramName]: value
         });
     }
 

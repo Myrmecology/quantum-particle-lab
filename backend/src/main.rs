@@ -27,6 +27,7 @@ struct SimulationState {
     mouse_x: f64,
     mouse_y: f64,
     mouse_force: f64,
+    paused: bool,
 }
 
 #[derive(Deserialize)]
@@ -38,6 +39,7 @@ struct ControlUpdate {
     mouse_y: Option<f64>,
     mouse_force: Option<f64>,
     reset: Option<bool>,
+    paused: Option<bool>,
 }
 
 struct PhysicsEngine {
@@ -73,12 +75,19 @@ impl PhysicsEngine {
                 mouse_x: 600.0,
                 mouse_y: 300.0,
                 mouse_force: 5.0,
+                paused: false,
             })),
         }
     }
 
     async fn update_physics(&self) {
         let mut state = self.state.lock().await;
+        
+        // Don't update physics if paused
+        if state.paused {
+            return;
+        }
+        
         let width = 1200.0;
         let height = 600.0;
 
@@ -241,6 +250,9 @@ async fn handle_connection(stream: TcpStream, engine: Arc<PhysicsEngine>) {
                 }
                 if let Some(force) = update.mouse_force {
                     state.mouse_force = force;
+                }
+                if let Some(pause_state) = update.paused {
+                    state.paused = pause_state;
                 }
                 if update.reset == Some(true) {
                     drop(state);

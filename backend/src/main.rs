@@ -4,7 +4,6 @@ use tokio_tungstenite::{accept_async, tungstenite::Message};
 use futures_util::{SinkExt, StreamExt};
 use serde::{Deserialize, Serialize};
 use rand::Rng;
-use std::net::SocketAddr;
 use tokio::net::{TcpListener, TcpStream};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -83,6 +82,13 @@ impl PhysicsEngine {
         let width = 1200.0;
         let height = 600.0;
 
+        // Extract values to avoid borrowing conflicts
+        let mouse_x = state.mouse_x;
+        let mouse_y = state.mouse_y;
+        let mouse_force = state.mouse_force;
+        let gravity = state.gravity;
+        let bounce = state.bounce;
+
         for particle in &mut state.particles {
             // Add to trail
             particle.trail.push((particle.x, particle.y));
@@ -91,16 +97,16 @@ impl PhysicsEngine {
             }
 
             // Mouse attraction/repulsion
-            let dx = state.mouse_x - particle.x;
-            let dy = state.mouse_y - particle.y;
+            let dx = mouse_x - particle.x;
+            let dy = mouse_y - particle.y;
             let distance = (dx * dx + dy * dy).sqrt().max(1.0);
             
-            let force = state.mouse_force / (distance * distance) * 1000.0;
+            let force = mouse_force / (distance * distance) * 1000.0;
             particle.vx += (dx / distance) * force * 0.01;
             particle.vy += (dy / distance) * force * 0.01;
 
             // Apply gravity
-            particle.vy += state.gravity;
+            particle.vy += gravity;
 
             // Update position
             particle.x += particle.vx;
@@ -108,11 +114,11 @@ impl PhysicsEngine {
 
             // Boundary collisions with bounce
             if particle.x <= 0.0 || particle.x >= width {
-                particle.vx *= -state.bounce;
+                particle.vx *= -bounce;
                 particle.x = particle.x.clamp(0.0, width);
             }
             if particle.y <= 0.0 || particle.y >= height {
-                particle.vy *= -state.bounce;
+                particle.vy *= -bounce;
                 particle.y = particle.y.clamp(0.0, height);
             }
 
@@ -165,7 +171,7 @@ impl PhysicsEngine {
 
 async fn handle_connection(stream: TcpStream, engine: Arc<PhysicsEngine>) {
     let ws_stream = accept_async(stream).await.expect("WebSocket handshake failed");
-    let (mut ws_sender, mut ws_receiver) = ws_stream.split();
+    let (ws_sender, mut ws_receiver) = ws_stream.split();
 
     // Physics update loop
     let engine_clone = engine.clone();

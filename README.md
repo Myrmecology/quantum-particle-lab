@@ -22,22 +22,100 @@ Clone the repository
 bashgit clone https://github.com/Myrmecology/quantum-particle-lab.git
 cd quantum-particle-lab
 
-Start the physics engine
+Start the Physics Engine (Backend)
+Open a terminal and run:
 bashcd backend
 cargo run
-✅ You should see: 🚀 Quantum Particle Lab running on ws://127.0.0.1:8080
-Launch the frontend (new terminal)
+✅ Expected Output:
+🚀 Quantum Particle Lab running on ws://127.0.0.1:8080
+⚠️ IMPORTANT: Keep this terminal open! The physics engine must stay running.
+Backend Troubleshooting:
+bash# If you get compilation errors:
+rustup update
+cargo clean
+cargo build
+cargo run
+
+# If port 8080 is busy, the app will show an error
+# Kill any process using port 8080 or restart your computer
+
+Launch the Frontend (Open a NEW terminal)
+Choose one of these methods:
+Option A: Python HTTP Server (Recommended)
 bashcd frontend
 
-# Choose one:
-python -m http.server 3000        # Python
-npx serve . -p 3000              # Node.js
-# OR use VS Code Live Server extension
+# Try this first:
+python -m http.server 3000 --bind 127.0.0.1
 
-Open your browser
+# If that doesn't work, try:
+python -m http.server 8000 --bind 127.0.0.1
+
+# On some systems, use python3:
+python3 -m http.server 3000 --bind 127.0.0.1
+Then open: http://127.0.0.1:3000 or http://127.0.0.1:8000
+Option B: Node.js Serve
+bashcd frontend
+
+# Install serve globally (one time only):
+npm install -g serve
+
+# Start the server:
+npx serve . -p 3000
+# OR if you installed serve globally:
+serve . -p 3000
+Then open: http://localhost:3000
+Option C: VS Code Live Server (Easiest)
+
+Install the "Live Server" extension in VS Code
+Right-click frontend/index.html in the file explorer
+Select "Open with Live Server"
+It will automatically open in your browser
+
+Option D: Simple File Method (Basic)
+bash# Navigate to the frontend folder
+cd frontend
+
+# Double-click index.html in your file explorer
+# OR drag index.html directly into your browser
+# OR open index.html with your browser
+⚠️ Note: This method may have CORS issues with WebSocket connections.
+Open in Browser
+Primary URLs to try:
+
+http://127.0.0.1:3000
 http://localhost:3000
+http://127.0.0.1:8000
+http://localhost:8000
+
+✅ Success indicators:
+
+You see a loading screen with a spinning quantum atom
+The interface loads with neon blue/magenta colors
+You see "CONNECTED" in the top-right status panel
+Particles are bouncing around the screen
 
 
+
+🔧 Complete Startup Troubleshooting
+Backend Issues
+ProblemSolutionCompilation errorsrustup update && cargo clean && cargo buildPort 8080 busyRestart computer or kill process using portRust not installedInstall from rustup.rsPermission deniedRun terminal as administrator
+Frontend Issues
+ProblemSolution"Site cannot be reached"Use --bind 127.0.0.1 flag with PythonIPv6 address [::] shownForce IPv4: python -m http.server 3000 --bind 127.0.0.1Port already in useTry different port: python -m http.server 8000Python not foundTry python3 instead of pythonNode.js errorsInstall Node.js from nodejs.org
+Connection Issues
+ProblemSolution"DISCONNECTED" statusEnsure backend is running firstNo particles movingRefresh page, check browser console (F12)WebSocket errorsBackend must be on ws://127.0.0.1:8080Blank screenTry different browser or enable JavaScript
+🎯 Quick Test Commands
+Test Backend:
+bash# This should show the WebSocket server running:
+cd backend && cargo run
+Test Frontend (Pick one):
+bash# Python method:
+cd frontend && python -m http.server 3000 --bind 127.0.0.1
+
+# Node.js method:
+cd frontend && npx serve . -p 3000
+
+# VS Code method:
+# Right-click index.html → "Open with Live Server"
 🎮 Controls
 InputActionMouse MoveAttract/repel particlesMouse ClickCreate energy burstSpacePause/ResumeRReset simulation1-4Quick presetsF11FullscreenCtrl+Shift+DDebug mode
 🎛️ Physics Parameters
@@ -152,5 +230,4 @@ If you found this project helpful, please consider:
 
 
 ⚡ Built with Quantum Precision ⚡
-Made with ❤️ and ☕ by Justin D
-Happy coding
+Made with ❤️ and ☕ by Justin D.

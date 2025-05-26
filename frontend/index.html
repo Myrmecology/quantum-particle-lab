@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Quantum Particle Lab ⚡</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/particles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="quantum-lab">
+        <!-- Header -->
+        <header class="lab-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="quantum-symbol">⚛</span>
+                    <h1>QUANTUM PARTICLE LAB</h1>
+                    <span class="version">v4.2.0</span>
+                </div>
+                <div class="status-panel">
+                    <div class="status-item">
+                        <span class="status-label">PARTICLES</span>
+                        <span class="status-value" id="particle-count">500</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">FPS</span>
+                        <span class="status-value" id="fps">60</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">STATUS</span>
+                        <span class="status-value connected" id="connection-status">CONNECTED</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Lab Interface -->
+        <div class="lab-interface">
+            <!-- Control Panel -->
+            <aside class="control-panel">
+                <div class="panel-header">
+                    <h2>⚡ PHYSICS CONTROLS</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+
+                <div class="control-group">
+                    <label for="gravity-slider">GRAVITATIONAL FORCE</label>
+                    <div class="slider-container">
+                        <input type="range" id="gravity-slider" min="-0.5" max="1.0" step="0.01" value="0.1" class="quantum-slider">
+                        <span class="slider-value" id="gravity-value">0.10</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="bounce-slider">COLLISION DAMPING</label>
+                    <div class="slider-container">
+                        <input type="range" id="bounce-slider" min="0.1" max="1.0" step="0.01" value="0.8" class="quantum-slider">
+                        <span class="slider-value" id="bounce-value">0.80</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="particles-slider">PARTICLE COUNT</label>
+                    <div class="slider-container">
+                        <input type="range" id="particles-slider" min="50" max="2000" step="50" value="500" class="quantum-slider">
+                        <span class="slider-value" id="particles-value">500</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="mouse-force-slider">MOUSE FIELD STRENGTH</label>
+                    <div class="slider-container">
+                        <input type="range" id="mouse-force-slider" min="-20" max="20" step="0.5" value="5" class="quantum-slider">
+                        <span class="slider-value" id="mouse-force-value">5.0</span>
+                    </div>
+                </div>
+
+                <div class="preset-controls">
+                    <h3>⚡ PRESETS</h3>
+                    <button class="preset-btn" data-preset="blackhole">🌌 BLACK HOLE</button>
+                    <button class="preset-btn" data-preset="storm">⚡ PARTICLE STORM</button>
+                    <button class="preset-btn" data-preset="fluid">🌊 FLUID SIM</button>
+                    <button class="preset-btn" data-preset="zero-g">🚀 ZERO-G</button>
+                </div>
+
+                <div class="action-controls">
+                    <button id="reset-btn" class="action-btn reset">🔄 RESET SIMULATION</button>
+                    <button id="pause-btn" class="action-btn pause">⏸ PAUSE</button>
+                </div>
+            </aside>
+
+            <!-- Particle Canvas -->
+            <main class="simulation-area">
+                <div class="canvas-container">
+                    <canvas id="particle-canvas" width="1200" height="600"></canvas>
+                    <div class="canvas-overlay">
+                        <div class="grid-overlay"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                
+                <!-- Performance Stats -->
+                <div class="performance-panel">
+                    <div class="perf-item">
+                        <span class="perf-label">Render Time</span>
+                        <span class="perf-value" id="render-time">16ms</span>
+                    </div>
+                    <div class="perf-item">
+                        <span class="perf-label">Physics Time</span>
+                        <span class="perf-value" id="physics-time">8ms</span>
+                    </div>
+                    <div class="perf-item">
+                        <span class="perf-label">Memory</span>
+                        <span class="perf-value" id="memory-usage">24MB</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-content">
+                <div class="quantum-loader">
+                    <div class="electron orbit-1"></div>
+                    <div class="electron orbit-2"></div>
+                    <div class="electron orbit-3"></div>
+                    <div class="nucleus"></div>
+                </div>
+                <h2>INITIALIZING QUANTUM FIELD</h2>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                <p>Calibrating particle interactions...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/ui.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

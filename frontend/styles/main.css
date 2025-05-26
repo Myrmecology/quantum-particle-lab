@@ -1,0 +1,511 @@
+/* ⚡ QUANTUM PARTICLE LAB - HOLOGRAPHIC INTERFACE ⚡ */
+
+:root {
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --neon-yellow: #ffff00;
+    --neon-green: #00ff00;
+    --dark-bg: #0a0a0f;
+    --panel-bg: rgba(10, 10, 20, 0.8);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0ff;
+    --quantum-font: 'Orbitron', monospace;
+    --ui-font: 'Rajdhani', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--ui-font);
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #16213e 100%);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 0, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.quantum-lab {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* HEADER SECTION */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.lab-header {
+    background: linear-gradient(135deg, var(--panel-bg) 0%, rgba(10, 10, 30, 0.9) 100%);
+    border-bottom: 2px solid var(--neon-cyan);
+    padding: 1rem 2rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 4px 20px rgba(0, 255, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.quantum-symbol {
+    font-size: 2.5rem;
+    color: var(--neon-cyan);
+    animation: quantumSpin 4s linear infinite;
+}
+
+@keyframes quantumSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.logo h1 {
+    font-family: var(--quantum-font);
+    font-weight: 900;
+    font-size: 1.8rem;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.version {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: var(--neon-green);
+    backdrop-filter: blur(10px);
+}
+
+.status-panel {
+    display: flex;
+    gap: 2rem;
+}
+
+.status-item {
+    text-align: center;
+}
+
+.status-label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+    font-weight: 300;
+}
+
+.status-value {
+    display: block;
+    font-family: var(--quantum-font);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px currentColor;
+}
+
+.status-value.connected {
+    color: var(--neon-green);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* MAIN INTERFACE */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.lab-interface {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 80px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* CONTROL PANEL */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.control-panel {
+    width: 320px;
+    background: linear-gradient(135deg, var(--panel-bg) 0%, rgba(20, 10, 40, 0.8) 100%);
+    border-right: 2px solid var(--neon-magenta);
+    padding: 1.5rem;
+    overflow-y: auto;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        4px 0 20px rgba(255, 0, 255, 0.3),
+        inset -1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.panel-header h2 {
+    font-family: var(--quantum-font);
+    font-size: 1.1rem;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px currentColor;
+}
+
+.panel-indicator {
+    width: 10px;
+    height: 10px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+    animation: pulse 1.5s infinite;
+}
+
+.control-group {
+    margin-bottom: 2rem;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--glass-bg);
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+.quantum-slider {
+    flex: 1;
+    height: 6px;
+    background: linear-gradient(90deg, #333 0%, #666 100%);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quantum-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.8),
+        0 0 20px rgba(255, 0, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.quantum-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 
+        0 0 15px rgba(0, 255, 255, 1),
+        0 0 25px rgba(255, 0, 255, 0.6);
+}
+
+.slider-value {
+    font-family: var(--quantum-font);
+    font-weight: 700;
+    color: var(--neon-cyan);
+    min-width: 60px;
+    text-align: center;
+    font-size: 0.9rem;
+    text-shadow: 0 0 5px currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PRESET CONTROLS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.preset-controls {
+    margin: 2rem 0;
+}
+
+.preset-controls h3 {
+    font-family: var(--quantum-font);
+    font-size: 0.9rem;
+    color: var(--neon-yellow);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px currentColor;
+}
+
+.preset-btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, var(--glass-bg), rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--ui-font);
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.preset-btn:hover {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-color: var(--neon-cyan);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+.preset-btn:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* ACTION CONTROLS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.action-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 2rem;
+}
+
+.action-btn {
+    padding: 1rem;
+    border: 2px solid;
+    border-radius: 10px;
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--quantum-font);
+    font-weight: 700;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.action-btn.reset {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.action-btn.reset:hover {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+.action-btn.pause {
+    border-color: var(--neon-yellow);
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+}
+
+.action-btn.pause:hover {
+    background: rgba(255, 255, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* SIMULATION AREA */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.simulation-area {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(10, 10, 30, 0.6) 100%);
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 140px);
+    border: 2px solid var(--neon-cyan);
+    background: radial-gradient(circle at center, rgba(0, 20, 40, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+    overflow: hidden;
+    box-shadow: 
+        inset 0 0 50px rgba(0, 255, 255, 0.2),
+        0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+#particle-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+}
+
+.canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    animation: scanSweep 3s linear infinite;
+}
+
+@keyframes scanSweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PERFORMANCE PANEL */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.performance-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 1rem;
+    background: var(--glass-bg);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.perf-item {
+    text-align: center;
+}
+
+.perf-label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+}
+
+.perf-value {
+    display: block;
+    font-family: var(--quantum-font);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 5px currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* RESPONSIVE DESIGN */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1400px) {
+    .control-panel {
+        width: 280px;
+    }
+    
+    .header-content {
+        padding: 0 1rem;
+    }
+    
+    .status-panel {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .lab-interface {
+        flex-direction: column;
+    }
+    
+    .control-panel {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .control-group {
+        flex: 1;
+        min-width: 200px;
+        margin-bottom: 0;
+    }
+}

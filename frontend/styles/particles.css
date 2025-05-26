@@ -1,0 +1,396 @@
+/* ⚡ QUANTUM PARTICLE EFFECTS & ANIMATIONS ⚡ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* LOADING SCREEN & QUANTUM ATOM ANIMATION */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #16213e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-content {
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.quantum-loader {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+}
+
+.nucleus {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--neon-cyan), var(--neon-magenta));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 0 20px var(--neon-cyan),
+        0 0 40px var(--neon-magenta),
+        0 0 60px var(--neon-yellow);
+    animation: nucleusPulse 2s ease-in-out infinite;
+}
+
+@keyframes nucleusPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+.electron {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.orbit-1 {
+    animation: orbit1 1.5s linear infinite;
+    color: var(--neon-cyan);
+}
+
+.orbit-2 {
+    animation: orbit2 2s linear infinite;
+    color: var(--neon-magenta);
+}
+
+.orbit-3 {
+    animation: orbit3 2.5s linear infinite;
+    color: var(--neon-yellow);
+}
+
+@keyframes orbit1 {
+    0% {
+        transform: rotate(0deg) translateX(40px) rotate(0deg);
+        top: 50%;
+        left: 50%;
+    }
+    100% {
+        transform: rotate(360deg) translateX(40px) rotate(-360deg);
+        top: 50%;
+        left: 50%;
+    }
+}
+
+@keyframes orbit2 {
+    0% {
+        transform: rotate(0deg) translateX(60px) rotate(0deg);
+        top: 50%;
+        left: 50%;
+    }
+    100% {
+        transform: rotate(360deg) translateX(60px) rotate(-360deg);
+        top: 50%;
+        left: 50%;
+    }
+}
+
+@keyframes orbit3 {
+    0% {
+        transform: rotate(0deg) translateX(80px) rotate(0deg);
+        top: 50%;
+        left: 50%;
+    }
+    100% {
+        transform: rotate(360deg) translateX(80px) rotate(-360deg);
+        top: 50%;
+        left: 50%;
+    }
+}
+
+.loading-content h2 {
+    font-family: var(--quantum-font);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 2s ease-in-out infinite;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
+    background-size: 200% 100%;
+    border-radius: 2px;
+    animation: loadingProgress 3s ease-in-out infinite, gradientMove 1s linear infinite;
+}
+
+@keyframes loadingProgress {
+    0% { width: 0%; }
+    50% { width: 80%; }
+    100% { width: 100%; }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.loading-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PARTICLE SYSTEM ENHANCEMENTS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.particle-glow {
+    filter: blur(1px);
+    opacity: 0.8;
+}
+
+.particle-trail {
+    filter: blur(0.5px);
+    opacity: 0.6;
+}
+
+/* Canvas cursor effects */
+.canvas-container:hover {
+    cursor: crosshair;
+}
+
+.canvas-container.attracting {
+    cursor: pointer;
+}
+
+.canvas-container.repelling {
+    cursor: not-allowed;
+}
+
+/* Mouse interaction indicator */
+.mouse-field {
+    position: absolute;
+    pointer-events: none;
+    border: 2px solid var(--neon-cyan);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.1), transparent 60%);
+    transform: translate(-50%, -50%);
+    transition: all 0.1s ease;
+    opacity: 0;
+}
+
+.mouse-field.active {
+    opacity: 0.8;
+    animation: fieldPulse 1s ease-in-out infinite;
+}
+
+@keyframes fieldPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PRESET EFFECT INDICATORS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.preset-btn.active {
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.1));
+    border-color: var(--neon-cyan);
+    box-shadow: 
+        0 0 15px rgba(0, 255, 255, 0.5),
+        inset 0 0 10px rgba(0, 255, 255, 0.1);
+    transform: translateX(8px);
+}
+
+.preset-btn.active::before {
+    content: '●';
+    color: var(--neon-green);
+    margin-right: 0.5rem;
+    animation: pulse 1s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* SIMULATION MODE OVERLAYS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.simulation-mode-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--glass-bg);
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    font-family: var(--quantum-font);
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px currentColor;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.simulation-mode-overlay.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.simulation-mode-overlay.blackhole {
+    color: var(--neon-magenta);
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+.simulation-mode-overlay.storm {
+    color: var(--neon-yellow);
+    border-color: var(--neon-yellow);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+}
+
+.simulation-mode-overlay.fluid {
+    color: var(--neon-cyan);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.simulation-mode-overlay.zerog {
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PERFORMANCE INDICATORS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.perf-value.excellent {
+    color: var(--neon-green);
+}
+
+.perf-value.good {
+    color: var(--neon-cyan);
+}
+
+.perf-value.warning {
+    color: var(--neon-yellow);
+    animation: pulse 1.5s infinite;
+}
+
+.perf-value.critical {
+    color: #ff4444;
+    animation: pulse 0.8s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* PARTICLE CANVAS EFFECTS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+#particle-canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    filter: contrast(1.1) brightness(1.05);
+}
+
+.canvas-container.paused::after {
+    content: '⏸ PAUSED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--quantum-font);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px currentColor;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    border: 2px solid var(--neon-yellow);
+    backdrop-filter: blur(10px);
+    animation: pulse 2s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+/* SPECIAL EFFECTS */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.quantum-ripple {
+    position: absolute;
+    border: 2px solid var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: rippleEffect 0.6s ease-out;
+}
+
+@keyframes rippleEffect {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+.energy-burst {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: energyBurst 0.8s ease-out;
+}
+
+@keyframes energyBurst {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+        box-shadow: 0 0 0 rgba(0, 255, 255, 0.8);
+    }
+    50% {
+        transform: scale(3);
+        opacity: 0.8;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    }
+    100% {
+        transform: scale(6);
+        opacity: 0;
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0);
+    }
+}

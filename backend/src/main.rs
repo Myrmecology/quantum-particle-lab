@@ -208,6 +208,30 @@ async fn handle_connection(stream: TcpStream, engine: Arc<PhysicsEngine>) {
                 }
                 if let Some(count) = update.particle_count {
                     state.particle_count = count;
+                    // Actually resize the particles array
+                    let current_count = state.particles.len();
+                    
+                    if count > current_count {
+                        // Add more particles
+                        let mut rng = rand::thread_rng();
+                        let colors = ["#00ffff", "#ff00ff", "#ffff00", "#ff4444", "#44ff44", "#4444ff"];
+                        
+                        for i in current_count..count {
+                            state.particles.push(Particle {
+                                id: i,
+                                x: rng.gen_range(50.0..1150.0),
+                                y: rng.gen_range(50.0..550.0),
+                                vx: rng.gen_range(-1.0..1.0),
+                                vy: rng.gen_range(-1.0..1.0),
+                                mass: rng.gen_range(0.5..2.0),
+                                color: colors[rng.gen_range(0..colors.len())].to_string(),
+                                trail: Vec::new(),
+                            });
+                        }
+                    } else if count < current_count {
+                        // Remove excess particles
+                        state.particles.truncate(count);
+                    }
                 }
                 if let Some(x) = update.mouse_x {
                     state.mouse_x = x;

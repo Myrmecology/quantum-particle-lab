@@ -84,8 +84,15 @@ class QuantumUI {
     }
 
     updateSliderValue(event, valueElement) {
-        const value = parseFloat(event.target.value);
-        valueElement.textContent = value.toFixed(2);
+        let value = parseFloat(event.target.value);
+        
+        // Special handling for particle count (should be integer)
+        if (event.target.id === 'particles-slider') {
+            value = Math.round(value);
+            valueElement.textContent = value.toString();
+        } else {
+            valueElement.textContent = value.toFixed(2);
+        }
         
         // Add visual feedback
         this.addSliderGlow(event.target);

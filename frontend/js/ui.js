@@ -128,6 +128,9 @@ class QuantumUI {
         this.pauseBtn.textContent = this.isPaused ? '▶ RESUME' : '⏸ PAUSE';
         this.canvasContainer.classList.toggle('paused', this.isPaused);
         this.addButtonEffect(this.pauseBtn);
+        
+        // Send pause state to backend
+        this.emitControlChange({ paused: this.isPaused });
     }
 
     handlePreset(preset) {
